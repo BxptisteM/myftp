@@ -11,10 +11,12 @@ CFLAGS = -Iinclude -W -Wall -Wextra -Wshadow -Werror
 
 CHM     	=	source/
 ARGS   		=	$(CHM)handle_args/
+SOCKET			=	$(CHM)socket/
 
 SRC =	$(CHM)main.c 													\
 		$(ARGS)check_args.c 											\
 		$(ARGS)help_flag.c 												\
+		$(SOCKET)create_socket.c 										\
 
 TEST = 		\
 

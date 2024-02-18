@@ -6,9 +6,11 @@
 */
 
 #include "myftp.h"
+#include <stdlib.h>
 
 int main(int ac, char **av)
 {
     check_args(ac, av);
+    handle_connection(initialize_listening_socket(atoi(av[1])));
     return (0);
 }
