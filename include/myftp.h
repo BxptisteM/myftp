@@ -5,18 +5,18 @@
 ** myftp
 */
 
-#ifndef MYFTP_H_
-    #define MYFTP_H_
-
-/**
- * @brief Macro for the tcp protocol
- */
-#define TCP 6
-
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+
+#ifndef MYFTP_H_
+    #define MYFTP_H_
+
+    /**
+     * @brief Macro for the tcp protocol
+     */
+    #define TCP 6
 
 /**
  * @brief check if the args are valid
