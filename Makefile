@@ -10,8 +10,11 @@ CC 	= 	gcc
 CFLAGS = -Iinclude -W -Wall -Wextra -Wshadow -Werror
 
 CHM     	=	source/
+ARGS   		=	$(CHM)handle_args/
 
 SRC =	$(CHM)main.c 													\
+		$(ARGS)check_args.c 											\
+		$(ARGS)help_flag.c 												\
 
 TEST = 		\
 

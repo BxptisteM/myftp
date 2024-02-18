@@ -5,9 +5,10 @@
 ** main
 */
 
+#include "myftp.h"
+
 int main(int ac, char **av)
 {
-    (void)ac;
-    (void)av;
+    check_args(ac, av);
     return (0);
 }
