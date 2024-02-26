@@ -56,10 +56,10 @@ int handle_connection(int sockfd)
             exit(84);
         }
         printf("Connection from %s:%d\n",
-                inet_ntoa(peer_addr.sin_addr),
-                ntohs(peer_addr.sin_port));
-        close(sockfd);
+            inet_ntoa(peer_addr.sin_addr),
+            ntohs(peer_addr.sin_port));
         close(new_socket);
     }
+    close(sockfd);
     return 0;
 }
