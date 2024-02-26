@@ -2,6 +2,7 @@
 *.d
 *.log
 *.vscode
+tests
 
 # Object files
 *.o
@@ -37,6 +38,7 @@
 *.i*86
 *.x86_64
 *.hex
+myftp
 
 # Debug files
 *.dSYM/

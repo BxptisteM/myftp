@@ -19,7 +19,7 @@ void initialize_socket(int sockfd, struct sockaddr_in *addr, socklen_t size)
         perror(strerror(errno));
         exit(84);
     }
-    if (bind(sockfd, (struct sockaddr*)&addr, size) == -1) {
+    if (bind(sockfd, (struct sockaddr*)addr, size) == -1) {
         perror(strerror(errno));
         exit(84);
     }
@@ -45,19 +45,21 @@ int initialize_listening_socket(int socket_port)
 
 int handle_connection(int sockfd)
 {
-    int new_socket = 0;
-    struct sockaddr_in peer_addr;
-    socklen_t peer_size = sizeof(peer_addr);
+    while (1) {
+        int new_socket = 0;
+        struct sockaddr_in peer_addr;
+        socklen_t peer_size = sizeof(peer_addr);
 
-    new_socket = accept(sockfd, (struct sockaddr*)&peer_addr, &peer_size);
-    if (new_socket == -1) {
-        perror(strerror(errno));
-        exit(84);
+        new_socket = accept(sockfd, (struct sockaddr*)&peer_addr, &peer_size);
+        if (new_socket == -1) {
+            perror(strerror(errno));
+            exit(84);
+        }
+        printf("Connection from %s:%d\n",
+                inet_ntoa(peer_addr.sin_addr),
+                ntohs(peer_addr.sin_port));
+        close(sockfd);
+        close(new_socket);
     }
-    printf("Connection from %s:%d\n",
-            inet_ntoa(peer_addr.sin_addr),
-            ntohs(peer_addr.sin_port));
-    close(sockfd);
-    close(new_socket);
     return 0;
 }
