@@ -12,6 +12,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 void initialize_socket(int sockfd, struct sockaddr_in *addr, socklen_t size)
 {
@@ -47,18 +48,24 @@ int handle_connection(int sockfd)
 {
     while (1) {
         int new_socket = 0;
+        int child_pid = 0;
         struct sockaddr_in peer_addr;
         socklen_t peer_size = sizeof(peer_addr);
 
         new_socket = accept(sockfd, (struct sockaddr*)&peer_addr, &peer_size);
-        if (new_socket == -1) {
-            perror(strerror(errno));
-            exit(84);
+        child_pid = fork();
+        if (child_pid == 0) {
+            if (new_socket == -1) {
+                perror(strerror(errno));
+                exit(84);
+            }
+            printf("Connection from %s:%d\n",
+                inet_ntoa(peer_addr.sin_addr),
+                ntohs(peer_addr.sin_port));
+        } else {
+            waitpid(child_pid, NULL, 0);
+            close(new_socket);
         }
-        printf("Connection from %s:%d\n",
-            inet_ntoa(peer_addr.sin_addr),
-            ntohs(peer_addr.sin_port));
-        close(new_socket);
     }
     close(sockfd);
     return 0;
