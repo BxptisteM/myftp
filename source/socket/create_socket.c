@@ -86,7 +86,6 @@ static void handle_client_activity(int fd)
     } else {
         buffer[valread] = '\0';
         parse_input(buffer);
-        // handle_command(buffer, fd);
     }
 }
 

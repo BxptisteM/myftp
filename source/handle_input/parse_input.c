@@ -27,7 +27,6 @@ void parse_input(char *input)
     command = strtok(input, " ");
     for (i = 0; i < array_size; ++i) {
         if (strcmp(command, commands_array[i].command) == 0) {
-            // printf("Command: %s\n", command);
             commands_array[i].func(input);
             break;
         }
