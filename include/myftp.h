@@ -17,6 +17,10 @@
      * @brief Macro for the tcp protocol
      */
     #define TCP 6
+    /**
+     * @brief Macro for the max client number
+     */
+    #define MAX_CLIENTS 100
 
 /**
  * @brief check if the args are valid

@@ -13,8 +13,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <sys/select.h>
 
-void initialize_socket(int sockfd, struct sockaddr_in *addr, socklen_t size)
+static void initialize_socket(int sockfd, struct sockaddr_in *addr,
+    socklen_t size)
 {
     if (sockfd == -1) {
         perror(strerror(errno));
@@ -27,6 +29,72 @@ void initialize_socket(int sockfd, struct sockaddr_in *addr, socklen_t size)
     if (listen(sockfd, 100) == -1) {
         perror(strerror(errno));
         exit(84);
+    }
+}
+
+static void update_max_fd(int current, int *max_fd)
+{
+    if (current > *max_fd)
+        *max_fd = current;
+}
+
+static void setup_file_descriptors(int sockfd, fd_set *read_fds, int *max_fd,
+    int clients_fds[])
+{
+    FD_ZERO(read_fds);
+    FD_SET(sockfd, read_fds);
+    *max_fd = sockfd;
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        if (clients_fds[i] > 0) {
+            FD_SET(clients_fds[i], read_fds);
+            update_max_fd(clients_fds[i], max_fd);
+        }
+    }
+}
+
+static void handle_new_connection(int sockfd, int clients_fds[])
+{
+    struct sockaddr_in client_addr;
+    socklen_t client_addr_len = sizeof(client_addr);
+    int new_socket = accept(sockfd, (struct sockaddr *)&client_addr,
+        &client_addr_len);
+
+    if (new_socket < 0) {
+        perror(strerror(errno));
+        return;
+    }
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        if (clients_fds[i] == 0) {
+            clients_fds[i] = new_socket;
+            break;
+        }
+    }
+}
+
+static void handle_client_activity(int fd)
+{
+    char buffer[1025];
+    int valread = read(fd, buffer, 1024);
+
+    if (valread == 0) {
+        printf("Host disconnected, fd %d\n", fd);
+        close(fd);
+        fd = 0;
+    } else {
+        buffer[valread] = '\0';
+        send(fd, buffer, strlen(buffer), 0);
+    }
+}
+
+static void process_client_activities(int *clients_fds, fd_set *read_fds)
+{
+    int fd = 0;
+
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        fd = clients_fds[i];
+        if (FD_ISSET(fd, read_fds)) {
+            handle_client_activity(fd);
+        }
     }
 }
 
@@ -44,34 +112,24 @@ int initialize_listening_socket(int socket_port)
     return sockfd;
 }
 
-void accept_connections(int new_socket, int child_pid,
-    struct sockaddr_in *peer_addr)
-{
-    if (child_pid == 0) {
-        if (new_socket == -1) {
-            perror(strerror(errno));
-            exit(84);
-        }
-        printf("Connection from %s:%d\n",
-            inet_ntoa(peer_addr->sin_addr),
-            ntohs(peer_addr->sin_port));
-    } else {
-        waitpid(child_pid, NULL, 0);
-        close(new_socket);
-    }
-}
-
 int handle_connection(int sockfd)
 {
-    int new_socket = 0;
-    int child_pid = 0;
-    struct sockaddr_in peer_addr;
-    socklen_t peer_size = sizeof(peer_addr);
+    int clients_fds[MAX_CLIENTS] = {0};
+    int max_fd = 0;
+    int activity = 0;
+    fd_set read_fds;
 
     while (1) {
-        new_socket = accept(sockfd, (struct sockaddr*)&peer_addr, &peer_size);
-        child_pid = fork();
-        accept_connections(new_socket, child_pid, &peer_addr);
+        setup_file_descriptors(sockfd, &read_fds, &max_fd, clients_fds);
+        activity = select(max_fd + 1, &read_fds, NULL, NULL, NULL);
+        if ((activity < 0) && (errno != EINTR)) {
+            perror(strerror(errno));
+            continue;
+        }
+        if (FD_ISSET(sockfd, &read_fds)) {
+            handle_new_connection(sockfd, clients_fds);
+        }
+        process_client_activities(clients_fds, &read_fds);
     }
     close(sockfd);
     return 0;
