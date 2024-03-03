@@ -6,6 +6,7 @@
 */
 
 #include "myftp.h"
+#include "commands.h"
 #include <error.h>
 #include <errno.h>
 #include <stdio.h>
@@ -65,6 +66,7 @@ static void handle_new_connection(int sockfd, int clients_fds[])
     }
     printf("New connection: ip is: %s, port: %d\n",
         inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+    write(new_socket, "220\n", 4);
     for (int i = 0; i < MAX_CLIENTS; i++) {
         if (clients_fds[i] == 0) {
             clients_fds[i] = new_socket;
@@ -83,7 +85,8 @@ static void handle_client_activity(int fd)
         close(fd);
     } else {
         buffer[valread] = '\0';
-        write(fd, buffer, strlen(buffer));
+        parse_input(buffer);
+        // handle_command(buffer, fd);
     }
 }
 

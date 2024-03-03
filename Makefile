@@ -11,12 +11,29 @@ CFLAGS = -Iinclude -W -Wall -Wextra -Wshadow -Werror
 
 CHM     	=	source/
 ARGS   		=	$(CHM)handle_args/
-SOCKET			=	$(CHM)socket/
+SOCKET		=	$(CHM)socket/
+INPUT		=	$(CHM)handle_input/
+CMD			=	$(CHM)handle_input/commands/
 
 SRC =	$(CHM)main.c 													\
 		$(ARGS)check_args.c 											\
 		$(ARGS)help_flag.c 												\
 		$(SOCKET)create_socket.c 										\
+		$(INPUT)parse_input.c 											\
+		$(CMD)cdup_command.c 											\
+		$(CMD)cwd_command.c 											\
+		$(CMD)delete_command.c 											\
+		$(CMD)help_command.c 											\
+		$(CMD)list_command.c 											\
+		$(CMD)noop_command.c 											\
+		$(CMD)password_command.c 										\
+		$(CMD)pasv_command.c 											\
+		$(CMD)port_command.c 											\
+		$(CMD)pwd_command.c 											\
+		$(CMD)quit_command.c 											\
+		$(CMD)retr_command.c 											\
+		$(CMD)stor_command.c 											\
+		$(CMD)user_command.c 											\
 
 TEST = 		\
 

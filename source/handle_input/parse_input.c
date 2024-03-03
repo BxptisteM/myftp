@@ -1,0 +1,35 @@
+/*
+** EPITECH PROJECT, 2024
+** myftp [WSL: Ubuntu]
+** File description:
+** parse_input
+*/
+
+#include "commands.h"
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+void parse_input(char *input)
+{
+    char *command = NULL;
+    int i = 0;
+    int array_size = 0;
+    commands_t commands_array[] = {{"USER", &user_cmd}, {"PASS", &pass_cmd},
+        {"CWD", &cwd_cmd}, {"CDUP", &cdup_cmd}, {"QUIT", &quit_cmd},
+        {"DELE", &dele_cmd}, {"PWD", &pwd_cmd}, {"PASV", &pasv_cmd},
+        {"PORT", &port_cmd}, {"HELP", &help_cmd}, {"NOOP", &noop_cmd},
+        {"RETR", &retr_cmd}, {"STOR", &stor_cmd}, {"LIST", &list_cmd}};
+
+    if (input == NULL || input[0] == '\0')
+        return;
+    array_size = sizeof(commands_array) / sizeof(commands_array[0]);
+    command = strtok(input, " ");
+    for (i = 0; i < array_size; ++i) {
+        if (strcmp(command, commands_array[i].command) == 0) {
+            // printf("Command: %s\n", command);
+            commands_array[i].func(input);
+            break;
+        }
+    }
+}
