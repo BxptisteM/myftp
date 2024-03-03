@@ -13,7 +13,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/wait.h>
 #include <sys/select.h>
 
 static void initialize_socket(int sockfd, struct sockaddr_in *addr,
@@ -66,7 +65,7 @@ static void handle_new_connection(int sockfd, int clients_fds[])
     }
     printf("New connection: ip is: %s, port: %d\n",
         inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
-    write(new_socket, "220\n", 4);
+    write(new_socket, C220, strlen(C220));
     for (int i = 0; i < MAX_CLIENTS; i++) {
         if (clients_fds[i] == 0) {
             clients_fds[i] = new_socket;
@@ -77,7 +76,7 @@ static void handle_new_connection(int sockfd, int clients_fds[])
 
 static void handle_client_activity(int fd)
 {
-    char buffer[1025];
+    char buffer[1024];
     int valread = read(fd, buffer, 1024);
 
     if (valread == 0) {

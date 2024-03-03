@@ -13,6 +13,8 @@
 #ifndef MYFTP_H_
     #define MYFTP_H_
 
+    #define C220 "Connection Establishment...\n<- 220\n"
+
     /**
      * @brief Macro for the tcp protocol
      */

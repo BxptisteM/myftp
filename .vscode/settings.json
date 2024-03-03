@@ -3,6 +3,7 @@
         "string.h": "c",
         "system_error": "c",
         "commands.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "list.h": "c"
     }
 }
