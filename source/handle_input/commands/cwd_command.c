@@ -7,8 +7,8 @@
 
 #include "commands.h"
 
-void cwd_cmd(char *input)
+void cwd_cmd(char *input, int client_fd)
 {
     (void)input;
-    printf("CWD command\n");
+    write(client_fd, "CWD command\n", strlen("CWD command\n"));
 }

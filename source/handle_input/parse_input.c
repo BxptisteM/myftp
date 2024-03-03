@@ -6,11 +6,9 @@
 */
 
 #include "commands.h"
-#include <string.h>
-#include <stdio.h>
 #include <stdlib.h>
 
-void parse_input(char *input)
+void parse_input(char *input, int client_fd)
 {
     char *command = NULL;
     int i = 0;
@@ -27,7 +25,7 @@ void parse_input(char *input)
     command = strtok(input, " ");
     for (i = 0; i < array_size; ++i) {
         if (strcmp(command, commands_array[i].command) == 0) {
-            commands_array[i].func(input);
+            commands_array[i].func(input, client_fd);
             break;
         }
     }

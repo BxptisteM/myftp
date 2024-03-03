@@ -7,8 +7,8 @@
 
 #include "commands.h"
 
-void pass_cmd(char *input)
+void pass_cmd(char *input, int client_fd)
 {
     (void)input;
-    printf("PASS command\n");
+    write(client_fd, "PASS command\n", strlen("PASS command\n"));
 }

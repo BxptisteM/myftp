@@ -7,8 +7,8 @@
 
 #include "commands.h"
 
-void noop_cmd(char *input)
+void noop_cmd(char *input, int client_fd)
 {
     (void)input;
-    printf("NOOP command\n");
+    write(client_fd, "NOOP command\n", strlen("NOOP command\n"));
 }

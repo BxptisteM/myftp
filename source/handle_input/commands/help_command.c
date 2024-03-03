@@ -7,8 +7,8 @@
 
 #include "commands.h"
 
-void help_cmd(char *input)
+void help_cmd(char *input, int client_fd)
 {
     (void)input;
-    printf("HELP command\n");
+    write(client_fd, "HELP command\n", strlen("HELP command\n"));
 }

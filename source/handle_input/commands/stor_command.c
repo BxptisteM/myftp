@@ -7,8 +7,8 @@
 
 #include "commands.h"
 
-void stor_cmd(char *input)
+void stor_cmd(char *input, int client_fd)
 {
     (void)input;
-    printf("STOR command\n");
+    write(client_fd, "STOR command\n", strlen("STOR command\n"));
 }

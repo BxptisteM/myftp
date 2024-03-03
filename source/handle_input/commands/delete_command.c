@@ -7,8 +7,8 @@
 
 #include "commands.h"
 
-void dele_cmd(char *input)
+void dele_cmd(char *input, int client_fd)
 {
     (void)input;
-    printf("DELE command\n");
+    write(client_fd, "DELE command\n", strlen("DELE command\n"));
 }

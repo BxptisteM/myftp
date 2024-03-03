@@ -7,8 +7,8 @@
 
 #include "commands.h"
 
-void pasv_cmd(char *input)
+void pasv_cmd(char *input, int client_fd)
 {
     (void)input;
-    printf("PASV command\n");
+    write(client_fd, "PASV command\n", strlen("PASV command\n"));
 }

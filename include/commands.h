@@ -6,6 +6,8 @@
 */
 
 #include <stdio.h>
+#include <string.h>
+#include <unistd.h>
 
 #ifndef COMMANDS_H_
     #define COMMANDS_H_
@@ -15,23 +17,23 @@
 */
 typedef struct commands_s {
     char *command;
-    void (*func)(char *input);
+    void (*func)(char *input, int client_fd);
 } commands_t;
 
-void parse_input(char *input);
-void user_cmd(char *input);
-void pass_cmd(char *input);
-void cwd_cmd(char *input);
-void cdup_cmd(char *input);
-void quit_cmd(char *input);
-void dele_cmd(char *input);
-void pwd_cmd(char *input);
-void pasv_cmd(char *input);
-void port_cmd(char *input);
-void help_cmd(char *input);
-void noop_cmd(char *input);
-void retr_cmd(char *input);
-void stor_cmd(char *input);
-void list_cmd(char *input);
+void parse_input(char *input, int client_fd);
+void user_cmd(char *input, int client_fd);
+void pass_cmd(char *input, int client_fd);
+void cwd_cmd(char *input, int client_fd);
+void cdup_cmd(char *input, int client_fd);
+void quit_cmd(char *input, int client_fd);
+void dele_cmd(char *input, int client_fd);
+void pwd_cmd(char *input, int client_fd);
+void pasv_cmd(char *input, int client_fd);
+void port_cmd(char *input, int client_fd);
+void help_cmd(char *input, int client_fd);
+void noop_cmd(char *input, int client_fd);
+void retr_cmd(char *input, int client_fd);
+void stor_cmd(char *input, int client_fd);
+void list_cmd(char *input, int client_fd);
 
 #endif /* !COMMANDS_H_ */

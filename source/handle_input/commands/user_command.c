@@ -7,8 +7,8 @@
 
 #include "commands.h"
 
-void user_cmd(char *input)
+void user_cmd(char *input, int client_fd)
 {
     (void)input;
-    printf("USER command\n");
+    write(client_fd, "USER command\n", strlen("USER command\n"));
 }

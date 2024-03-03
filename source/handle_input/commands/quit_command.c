@@ -7,8 +7,8 @@
 
 #include "commands.h"
 
-void quit_cmd(char *input)
+void quit_cmd(char *input, int client_fd)
 {
     (void)input;
-    printf("QUIT command\n");
+    write(client_fd, "QUIT command\n", strlen("QUIT command\n"));
 }

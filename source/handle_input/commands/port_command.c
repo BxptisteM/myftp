@@ -7,8 +7,8 @@
 
 #include "commands.h"
 
-void port_cmd(char *input)
+void port_cmd(char *input, int client_fd)
 {
     (void)input;
-    printf("PORT command\n");
+    write(client_fd, "200 PORT command successful.\n", 28);
 }

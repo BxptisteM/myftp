@@ -7,8 +7,8 @@
 
 #include "commands.h"
 
-void list_cmd(char *input)
+void list_cmd(char *input, int client_fd)
 {
     (void)input;
-    printf("LIST command\n");
+    write(client_fd, "LIST command\n", strlen("LIST command\n"));
 }

@@ -7,8 +7,8 @@
 
 #include "commands.h"
 
-void cdup_cmd(char *input)
+void cdup_cmd(char *input, int client_fd)
 {
     (void)input;
-    printf("CDUP command\n");
+    write(client_fd, "CDUP command\n", strlen("CDUP command\n"));
 }

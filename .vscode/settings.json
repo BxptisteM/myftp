@@ -2,6 +2,7 @@
     "files.associations": {
         "string.h": "c",
         "system_error": "c",
-        "commands.h": "c"
+        "commands.h": "c",
+        "stdio.h": "c"
     }
 }
