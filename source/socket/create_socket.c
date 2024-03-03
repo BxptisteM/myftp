@@ -63,6 +63,8 @@ static void handle_new_connection(int sockfd, int clients_fds[])
         perror(strerror(errno));
         return;
     }
+    printf("New connection: ip is: %s, port: %d\n",
+        inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
     for (int i = 0; i < MAX_CLIENTS; i++) {
         if (clients_fds[i] == 0) {
             clients_fds[i] = new_socket;
@@ -79,10 +81,9 @@ static void handle_client_activity(int fd)
     if (valread == 0) {
         printf("Host disconnected, fd %d\n", fd);
         close(fd);
-        fd = 0;
     } else {
         buffer[valread] = '\0';
-        send(fd, buffer, strlen(buffer), 0);
+        write(fd, buffer, strlen(buffer));
     }
 }
 
