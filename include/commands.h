@@ -12,6 +12,8 @@
 #ifndef COMMANDS_H_
     #define COMMANDS_H_
 
+    #define C214 "Commands:\n<- 214\n"
+
 /**
  * @brief Structure for the commands
 */

@@ -22,7 +22,7 @@ void parse_input(char *input, int client_fd)
     if (input == NULL || input[0] == '\0')
         return;
     array_size = sizeof(commands_array) / sizeof(commands_array[0]);
-    command = strtok(input, " ");
+    command = strtok(input, " \r\n");
     for (i = 0; i < array_size; ++i) {
         if (strcmp(command, commands_array[i].command) == 0) {
             commands_array[i].func(input, client_fd);
