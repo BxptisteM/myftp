@@ -9,17 +9,19 @@
 #include <stdlib.h>
 #include "list.h"
 
-list_t *list_add_end(list_t *list, char *data)
+list_t *list_add_end(list_t *list, int fd)
 {
     list_t *end = malloc(sizeof(list_t));
-    list_t *tmp = NULL;
+    list_t *tmp = list;
 
     if (end == NULL)
         return (NULL);
+    end->fd = fd;
+    end->username = NULL;
+    end->password = NULL;
     end->next = NULL;
     if (list == NULL)
         return (end);
-    tmp = list;
     while (tmp->next != NULL)
         tmp = tmp->next;
     tmp->next = end;

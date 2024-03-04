@@ -74,14 +74,24 @@ static void handle_new_connection(int sockfd, int clients_fds[])
     }
 }
 
-static void handle_client_activity(int fd)
+static void free_fd_slot(int *clients_fds, int fd)
+{
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        if (clients_fds[i] == fd) {
+            clients_fds[i] = 0;
+            break;
+        }
+    }
+}
+
+void handle_client_activity(int fd, int *clients_fds)
 {
     char buffer[1024];
     int valread = read(fd, buffer, 1024);
 
     if (valread == 0) {
-        printf("Host disconnected, fd %d\n", fd);
         close(fd);
+        free_fd_slot(clients_fds, fd);
     } else {
         buffer[valread] = '\0';
         parse_input(buffer, fd);
@@ -95,7 +105,7 @@ static void process_client_activities(int *clients_fds, fd_set *read_fds)
     for (int i = 0; i < MAX_CLIENTS; i++) {
         fd = clients_fds[i];
         if (FD_ISSET(fd, read_fds)) {
-            handle_client_activity(fd);
+            handle_client_activity(fd, clients_fds);
         }
     }
 }

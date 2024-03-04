@@ -4,6 +4,7 @@
         "system_error": "c",
         "commands.h": "c",
         "stdio.h": "c",
-        "list.h": "c"
+        "list.h": "c",
+        "list": "c"
     }
 }

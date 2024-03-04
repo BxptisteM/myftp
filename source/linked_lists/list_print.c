@@ -12,5 +12,5 @@
 void print_list(list_t *list)
 {
     for (node_t *node = list; node != NULL; node = node->next)
-        printf("%s\n", node->data);
+        printf("%d\n", node->fd);
 }

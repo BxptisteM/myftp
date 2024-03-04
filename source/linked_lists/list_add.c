@@ -10,43 +10,38 @@
 #include <stdlib.h>
 #include "list.h"
 
-static node_t *create_node(char *data)
+list_t *create_node(int fd)
 {
-    node_t *node = malloc(sizeof(node_t));
+    list_t *new = malloc(sizeof(list_t));
 
-    if (node == NULL)
+    if (new == NULL)
         return NULL;
-    node->data = strdup(data);
-    node->next = NULL;
-    return node;
+    new->fd = fd;
+    new->username = NULL;
+    new->password = NULL;
+    new->next = NULL;
+    return new;
 }
 
-node_t *find_position(node_t *list, int pos)
+list_t *list_add(list_t *list, int fd, int pos)
 {
-    node_t *prev_node = NULL;
+    list_t *new = create_node(fd);
+    list_t *pre = NULL;
+    list_t *cur = list;
+    int i = 0;
 
-    for (int i = 0; i < pos && list != NULL; i++) {
-        prev_node = list;
-        list = list->next;
-    }
-    return prev_node;
-}
-
-list_t *list_add(list_t *list, char *data, int pos)
-{
-    node_t *new_node = create_node(strdup(data));
-    node_t *prev_node = NULL;
-
-    if (new_node == NULL)
+    if (new == NULL)
         return list;
     if (list == NULL || pos == 0) {
-        new_node->next = list;
-        return new_node;
+        new->next = list;
+        return new;
     }
-    prev_node = find_position(list, pos);
-    if (prev_node != NULL) {
-        new_node->next = prev_node->next;
-        prev_node->next = new_node;
+    while (cur != NULL && i < pos) {
+        i++;
+        pre = cur;
+        cur = cur->next;
     }
+    pre->next = new;
+    new->next = cur;
     return list;
 }

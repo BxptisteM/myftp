@@ -16,5 +16,5 @@ void print_node(list_t *list, int position)
     for (int i = 0; i != position; i++) {
         node = node->next;
     }
-    printf("%s", node->data);
+    printf("%d", node->fd);
 }

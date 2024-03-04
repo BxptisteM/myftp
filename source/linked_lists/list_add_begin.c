@@ -9,16 +9,15 @@
 #include <stdlib.h>
 #include "list.h"
 
-list_t *list_add_begin(list_t *list, char *data)
+list_t *list_add_begin(list_t *list, int fd)
 {
     list_t *begin = malloc(sizeof(list_t));
 
     if (begin == NULL)
         return (NULL);
-    if (list == NULL) {
-        begin->next = NULL;
-        return (begin);
-    }
+    begin->fd = fd;
+    begin->username = NULL;
+    begin->password = NULL;
     begin->next = list;
     return (begin);
 }

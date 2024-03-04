@@ -12,7 +12,8 @@
 
 typedef struct list_s {
     int fd;
-    char *data;
+    char *password;
+    char *username;
     struct list_s *next;
 } list_t, node_t;
 
@@ -22,7 +23,7 @@ typedef struct list_s {
  * @param data
  * @return list_t*
  */
-list_t *list_add_begin(list_t *list, char *data);
+list_t *list_add_begin(list_t *list, int fd);
 
 /**
  * @brief Add a node at the end of the list
@@ -30,7 +31,7 @@ list_t *list_add_begin(list_t *list, char *data);
  * @param data
  * @return list_t*
  */
-list_t *list_add_end(list_t *list, char *data);
+list_t *list_add_end(list_t *list, int fd);
 
 /**
  * @brief Add a node at a specific position
@@ -39,7 +40,7 @@ list_t *list_add_end(list_t *list, char *data);
  * @param pos
  * @return list_t*
  */
-list_t *list_add(list_t *list, char *data, int pos);
+list_t *list_add(list_t *list, int fd, int pos);
 
 /**
  * @brief Free the list

@@ -8,6 +8,7 @@
 #include "myftp.h"
 #include <stdlib.h>
 
+// list_t *list = NULL;
 int main(int ac, char **av)
 {
     check_args(ac, av);
