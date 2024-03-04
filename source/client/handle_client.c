@@ -7,11 +7,12 @@
 
 #include "client.h"
 
-client_t *create_client(struct sockaddr_in client_addr, socklen_t *client_addr_len, int new_socket)
+client_t *create_client(struct sockaddr_in *client_addr,
+    socklen_t *client_addr_len, int new_socket)
 {
     client_t *client = malloc(sizeof(client_t));
 
-    client->client_socket.addr = client_addr;
+    client->client_socket.addr = *client_addr;
     client->client_socket.size = *client_addr_len;
     client->client_socket.fd = new_socket;
     client->username = NULL;

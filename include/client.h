@@ -18,7 +18,7 @@
  * @param new_socket
  * @return client_t*
  */
-client_t *create_client(struct sockaddr_in client_addr, socklen_t
+client_t *create_client(struct sockaddr_in *client_addr, socklen_t
     *client_addr_len, int new_socket);
 
 /**
