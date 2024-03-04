@@ -5,76 +5,76 @@
 ** list
 */
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
+#include "server.h"
 
 #ifndef LIST_H_
     #define LIST_H_
 
 typedef struct list_s {
-    int fd;
-    char *password;
-    char *username;
+    struct client_s *client;
     struct list_s *next;
 } list_t, node_t;
 
 /**
- * @brief Add a node at the begin of the list
+ * @brief add a client to the list
  * @param list
- * @param data
+ * @param client
  * @return list_t*
  */
-list_t *list_add_begin(list_t *list, int fd);
+list_t *list_add(list_t *list, client_t *client);
 
 /**
- * @brief Add a node at the end of the list
- * @param list
- * @param data
+ * @brief create a node
+ * @param client
  * @return list_t*
  */
-list_t *list_add_end(list_t *list, int fd);
+list_t *create_node(client_t *client);
 
 /**
- * @brief Add a node at a specific position
- * @param list
- * @param data
+ * @brief add a client to the list at a specific position
+ * @param client
  * @param pos
  * @return list_t*
  */
-list_t *list_add(list_t *list, int fd, int pos);
+list_t *list_add_position(client_t *client, int pos);
 
 /**
- * @brief Free the list
- * @param list
+ * @brief add a client to the list at the end
+ * @param client
  * @return list_t*
  */
-list_t *list_free(list_t *list);
+list_t *list_add_end(client_t *client);
 
 /**
- * @brief Check if a list is empty
- * @param list
- * @return true
- * @return false
+ * @brief add a client to the list at the beginning
+ * @param client
+ * @return list_t*
  */
-bool list_is_empty(list_t *list);
+list_t *list_add_begin(client_t *client);
 
 /**
- * @brief Get the size of the list
+ * @brief remove a client from the list
+ * @param list
+ * @param pos
+ * @return list_t*
+ */
+list_t *list_pop(list_t *list, int pos);
+
+/**
+ * @brief get the size of the list
  * @param list
  * @return int
  */
-int list_get_len(list_t *list);
+list_t *get_elem(list_t *list, int pos);
 
 /**
- * @brief Print the content of a list
+ * @brief free a list
  * @param list
  */
-void print_list(list_t *list);
+list_t *list_free(list_t *list);
 
-/**
- * @brief print a specific node of a list
- * @param list
- * @param position
- */
-void print_node(list_t *list, int position);
 
 #endif /* !LIST_H_ */

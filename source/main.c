@@ -5,13 +5,15 @@
 ** main
 */
 
-#include "myftp.h"
+#include "server.h"
 #include <stdlib.h>
 
-// list_t *list = NULL;
 int main(int ac, char **av)
 {
+    server_t server;
+
     check_args(ac, av);
-    handle_connection(initialize_listening_socket(atoi(av[1])));
+    server = init_server(atoi(av[1]));
+    run_ftp(&server);
     return (0);
 }

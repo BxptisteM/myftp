@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "myftp.h"
+#include "server.h"
 
 void check_args(int ac, char **av)
 {

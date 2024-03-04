@@ -5,43 +5,20 @@
 ** list_add
 */
 
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "server.h"
 #include "list.h"
 
-list_t *create_node(int fd)
+list_t *list_add(list_t *list, client_t *client)
 {
     list_t *new = malloc(sizeof(list_t));
+    list_t *tmp = list;
 
-    if (new == NULL)
-        return NULL;
-    new->fd = fd;
-    new->username = NULL;
-    new->password = NULL;
+    new->client = client;
     new->next = NULL;
-    return new;
-}
-
-list_t *list_add(list_t *list, int fd, int pos)
-{
-    list_t *new = create_node(fd);
-    list_t *pre = NULL;
-    list_t *cur = list;
-    int i = 0;
-
-    if (new == NULL)
-        return list;
-    if (list == NULL || pos == 0) {
-        new->next = list;
-        return new;
-    }
-    while (cur != NULL && i < pos) {
-        i++;
-        pre = cur;
-        cur = cur->next;
-    }
-    pre->next = new;
-    new->next = cur;
-    return list;
+    if (list == NULL)
+        return (new);
+    while (tmp->next)
+        tmp = tmp->next;
+    tmp->next = new;
+    return (list);
 }

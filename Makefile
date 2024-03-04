@@ -11,7 +11,8 @@ CFLAGS = -Iinclude -W -Wall -Wextra -Wshadow -Werror
 
 CHM     	=	source/
 ARGS   		=	$(CHM)handle_args/
-SOCKET		=	$(CHM)socket/
+SRV			=	$(CHM)server/
+CLT 		= 	$(CHM)client/
 INPUT		=	$(CHM)handle_input/
 CMD			=	$(CHM)handle_input/commands/
 LIST		=	$(CHM)linked_lists/
@@ -20,7 +21,9 @@ LIST		=	$(CHM)linked_lists/
 SRC =	$(CHM)main.c 													\
 		$(ARGS)check_args.c 											\
 		$(ARGS)help_flag.c 												\
-		$(SOCKET)create_socket.c 										\
+		$(SRV)init_server.c												\
+		$(SRV)handle_server.c											\
+		$(CLT)handle_client.c											\
 		$(INPUT)parse_input.c 											\
 		$(CMD)cdup_command.c 											\
 		$(CMD)cwd_command.c 											\
@@ -36,13 +39,8 @@ SRC =	$(CHM)main.c 													\
 		$(CMD)retr_command.c 											\
 		$(CMD)stor_command.c 											\
 		$(CMD)user_command.c 											\
-		$(LIST)list_add_begin.c 										\
-		$(LIST)list_add_end.c 											\
-		$(LIST)list_free.c												\
-		$(LIST)list_is_empty.c											\
 		$(LIST)list_add.c 												\
-		$(LIST)list_len.c 												\
-		$(LIST)list_print.c 											\
+
 
 TEST = 		\
 

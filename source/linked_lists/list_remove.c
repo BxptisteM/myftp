@@ -2,11 +2,9 @@
 ** EPITECH PROJECT, 2024
 ** myftp [WSL: Ubuntu]
 ** File description:
-** list_free
+** list_remove
 */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "list.h"
 
 list_t *list_free(list_t *list)
