@@ -17,3 +17,14 @@ int list_len(list_t *list)
     }
     return len;
 }
+
+list_t *list_get_node(list_t *list, int pos)
+{
+    int i = 0;
+
+    while (list && i < pos) {
+        list = list->next;
+        i++;
+    }
+    return list;
+}

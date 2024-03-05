@@ -39,21 +39,21 @@ list_t *create_node(client_t *client);
  * @param pos
  * @return list_t*
  */
-list_t *list_add_position(client_t *client, int pos);
+list_t *list_add_position(list_t *list, client_t *client, int pos);
 
 /**
  * @brief add a client to the list at the end
  * @param client
  * @return list_t*
  */
-list_t *list_add_end(client_t *client);
+list_t *list_add_end(list_t *list, client_t *client);
 
 /**
  * @brief add a client to the list at the beginning
  * @param client
  * @return list_t*
  */
-list_t *list_add_begin(client_t *client);
+list_t *list_add_begin(list_t *list, client_t *client);
 
 /**
  * @brief remove a client from the list
@@ -76,5 +76,12 @@ list_t *get_elem(list_t *list, int pos);
  */
 list_t *list_free(list_t *list);
 
+
+/**
+ * @brief get the size of the list
+ * @param list
+ * @return int
+ */
+int list_len(list_t *list);
 
 #endif /* !LIST_H_ */
