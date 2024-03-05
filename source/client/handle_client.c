@@ -19,6 +19,7 @@ client_t *create_client(struct sockaddr_in *client_addr,
     client->password = NULL;
     client->is_logged_in = false;
     client->quit_server = false;
+    client->need_password = false;
     return (client);
 }
 

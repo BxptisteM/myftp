@@ -7,13 +7,36 @@
 
 #include "commands.h"
 
-void pass_cmd(char *input, server_t *server, client_t *client)
+static bool anonymous_logging(client_t *client, char *input)
 {
-    (void)input;
-    (void)server;
-    if (client->is_logged_in == false) {
+    if ((strcmp(client->username, "Anonymous\r") == 0 &&
+        strcmp(input, "PASS\r\n") == 0)) {
+        write(client->client_socket.fd, "230\n", 5);
+        client->is_logged_in = true;
+        return true;
+    }
+    return false;
+}
+
+void pass_cmd(char *input, server_t *server UNUSED, client_t *client)
+{
+    char *password = NULL;
+    char *extra = NULL;
+
+    if (client->need_password == false) {
         write(client->client_socket.fd, "530\n", 5);
         return;
     }
-    write(client->client_socket.fd, "PASS command\n", 14);
+    if (anonymous_logging(client, input) == true)
+        return;
+    strtok(input, " \n");
+    password = strtok(NULL, " \n");
+    extra = strtok(NULL, " \n");
+    if (password == NULL || extra != NULL) {
+        write(client->client_socket.fd, "530\n", 5);
+        return;
+    }
+    client->password = strdup(password);
+    client->is_logged_in = true;
+    write(client->client_socket.fd, "230\r\n", 6);
 }

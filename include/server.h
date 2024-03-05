@@ -21,6 +21,7 @@
 #ifndef MYFTP_H_
     #define MYFTP_H_
 
+    #define UNUSED __attribute__((unused))
     #define C220 "220\r\n"
 
     /**

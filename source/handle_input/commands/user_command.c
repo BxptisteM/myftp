@@ -21,6 +21,7 @@ static void check_taken_usernames(server_t *server, client_t *client,
             return;
         }
     }
+    write(client->client_socket.fd, "331\r\n", 6);
 }
 
 void user_cmd(char *input, server_t *server, client_t *client)
@@ -37,9 +38,11 @@ void user_cmd(char *input, server_t *server, client_t *client)
     }
     if (strcmp(username, "Anonymous\r") == 0) {
         client->username = strdup(username);
+        client->need_password = true;
         write(client->client_socket.fd, "331\r\n", 6);
         return;
     }
     check_taken_usernames(server, client, username);
     client->username = strdup(username);
+    client->need_password = true;
 }
