@@ -45,6 +45,7 @@ typedef struct client_s {
     char *username;
     char *password;
     bool is_logged_in;
+    bool quit_server;
 } client_t;
 
 

@@ -40,6 +40,7 @@ SRC =	$(CHM)main.c 													\
 		$(CMD)stor_command.c 											\
 		$(CMD)user_command.c 											\
 		$(LIST)list_add.c 												\
+		$(LIST)list_remove.c 											\
 
 
 TEST = 		\

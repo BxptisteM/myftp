@@ -39,14 +39,26 @@ list_t list_pop(list_t *list)
     return *list;
 }
 
-list_t *list_free(list_t *list)
+list_t *list_remove(list_t *list, list_t *node)
 {
-    list_t *tmp;
+    list_t *tmp = list;
+    list_t *prev = NULL;
 
-    while (list != NULL) {
-        tmp = list;
+    if (list == NULL)
+        return NULL;
+    if (list == node) {
         list = list->next;
         free(tmp);
+        return list;
     }
-    return NULL;
+    while (tmp) {
+        if (tmp == node) {
+            prev->next = tmp->next;
+            free(tmp);
+            return list;
+        }
+        prev = tmp;
+        tmp = tmp->next;
+    }
+    return list;
 }

@@ -61,7 +61,7 @@ list_t *list_add_begin(list_t *list, client_t *client);
  * @param pos
  * @return list_t*
  */
-list_t *list_pop(list_t *list, int pos);
+list_t list_pop(list_t *list);
 
 /**
  * @brief get the size of the list
@@ -83,5 +83,13 @@ list_t *list_free(list_t *list);
  * @return int
  */
 int list_len(list_t *list);
+
+/**
+ * @brief remove a node from the list
+ * @param list
+ * @param node
+ * @return list_t*
+ */
+list_t *list_remove(list_t *list, list_t *node);
 
 #endif /* !LIST_H_ */
