@@ -13,7 +13,7 @@
 #ifndef COMMANDS_H_
     #define COMMANDS_H_
 
-    #define C214 "214\nCommands:\n"
+    #define C214 "214\r\n"
 
 /**
  * @brief Structure for the commands

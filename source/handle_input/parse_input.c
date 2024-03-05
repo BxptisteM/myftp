@@ -11,6 +11,7 @@
 void parse_input(char *input, server_t *server, client_t *client)
 {
     char *command = NULL;
+    char *tmp = strdup(input);
     int i = 0;
     int array_size = 0;
     commands_t commands_array[] = {{"USER", &user_cmd}, {"PASS", &pass_cmd},
@@ -22,7 +23,7 @@ void parse_input(char *input, server_t *server, client_t *client)
     if (input == NULL || input[0] == '\0')
         return;
     array_size = sizeof(commands_array) / sizeof(commands_array[0]);
-    command = strtok(input, " \r\n");
+    command = strtok(tmp, " \r\n");
     for (i = 0; i < array_size; ++i) {
         if (strcmp(command, commands_array[i].command) == 0) {
             commands_array[i].func(input, server, client);

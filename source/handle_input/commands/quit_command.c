@@ -11,7 +11,7 @@ void quit_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
     (void)server;
-    write(client->client_socket.fd, "221\nDisconnected from host\n", 28);
+    write(client->client_socket.fd, "221\r\n", 5);
     client->is_logged_in = false;
     client->quit_server = true;
 }

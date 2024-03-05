@@ -15,5 +15,5 @@ void noop_cmd(char *input, server_t *server, client_t *client)
         write(client->client_socket.fd, "530\n", 5);
         return;
     }
-    write(client->client_socket.fd, "200\nCommand okay.\n", 19);
+    write(client->client_socket.fd, "200\n", 5);
 }

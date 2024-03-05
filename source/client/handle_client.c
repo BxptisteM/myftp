@@ -22,26 +22,13 @@ client_t *create_client(struct sockaddr_in *client_addr,
     return (client);
 }
 
-static void free_fd_slot(list_t *clients, int fd)
-{
-    for (list_t *tmp = clients; tmp; tmp = tmp->next) {
-        if (tmp->client->client_socket.fd == fd) {
-            close(fd);
-            free(tmp->client);
-            tmp->client = NULL;
-            return;
-        }
-    }
-}
-
 static void handle_client_activity(int fd, server_t *server, client_t *client)
 {
     char buffer[1024];
     int valread = read(fd, buffer, 1024);
 
-    if (valread == 0) {
-        close(fd);
-        free_fd_slot(server->clients, fd);
+    if (valread == 0 || valread == -1 || (valread == 2 && buffer[0] == '\r')) {
+        return;
     } else {
         buffer[valread] = '\0';
         parse_input(buffer, server, client);

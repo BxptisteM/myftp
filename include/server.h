@@ -21,7 +21,7 @@
 #ifndef MYFTP_H_
     #define MYFTP_H_
 
-    #define C220 "220\nConnection Establishment...\n"
+    #define C220 "220\r\n"
 
     /**
      * @brief Macro for the tcp protocol
@@ -45,6 +45,7 @@ typedef struct client_s {
     char *username;
     char *password;
     bool is_logged_in;
+    bool need_password;
     bool quit_server;
 } client_t;
 
