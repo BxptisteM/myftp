@@ -28,4 +28,9 @@ client_t *create_client(struct sockaddr_in *client_addr, socklen_t
  */
 void process_client_activities(server_t *server, fd_set *read_fds);
 
+void remove_and_close_client_connection(list_t **clients, list_t *current,
+    list_t **prev);
+
+void process_and_remove_disconnected_clients(list_t **clients);
+
 #endif /* !CLIENT_H_ */

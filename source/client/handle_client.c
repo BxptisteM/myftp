@@ -18,6 +18,7 @@ client_t *create_client(struct sockaddr_in *client_addr,
     client->username = NULL;
     client->password = NULL;
     client->is_logged_in = false;
+    client->quit_server = false;
     return (client);
 }
 
@@ -55,6 +56,36 @@ void process_client_activities(server_t *server, fd_set *read_fds)
         if (FD_ISSET(tmp->client->client_socket.fd, read_fds)) {
             handle_client_activity(tmp->client->client_socket.fd, server,
                 tmp->client);
+        }
+    }
+}
+
+void remove_and_close_client_connection(list_t **clients, list_t *current,
+    list_t **prev)
+{
+    close(current->client->client_socket.fd);
+    free(current->client);
+    if (*prev == NULL)
+        *clients = current->next;
+    else
+        (*prev)->next = current->next;
+    free(current);
+}
+
+void process_and_remove_disconnected_clients(list_t **clients)
+{
+    list_t *current = *clients;
+    list_t *prev = NULL;
+    list_t *next = NULL;
+
+    while (current != NULL) {
+        if (current->client != NULL && current->client->quit_server) {
+            next = current->next;
+            remove_and_close_client_connection(clients, current, &prev);
+            current = next;
+        } else {
+            prev = current;
+            current = current->next;
         }
     }
 }

@@ -50,42 +50,12 @@ static void handle_new_connection(int sockfd, list_t *clients)
     clients = list_add(clients, client);
 }
 
-static void disconnect_clients(list_t *clients)
-{
-    list_t *tmp = clients;
-    list_t *prev = NULL;
-
-    while (tmp) {
-        if (tmp->client == NULL) {
-            prev = tmp;
-            tmp = tmp->next;
-            continue;
-        }
-        if (tmp->client->quit_server == true) {
-            close(tmp->client->client_socket.fd);
-            free(tmp->client);
-            if (prev == NULL) {
-                clients = tmp->next;
-                free(tmp);
-                tmp = clients;
-                continue;
-            }
-            prev->next = tmp->next;
-            free(tmp);
-            tmp = prev->next;
-            continue;
-        }
-        prev = tmp;
-        tmp = tmp->next;
-    }
-}
-
 void run_ftp(server_t *server)
 {
     int activity = 0;
 
     while (1) {
-        disconnect_clients(server->clients);
+        process_and_remove_disconnected_clients(&server->clients);
         setup_file_descriptors(server->server_socket->fd, &server->readfds,
             &server->max_fd, server->clients);
         activity = select(server->max_fd + 1, &server->readfds,
