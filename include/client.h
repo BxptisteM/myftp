@@ -26,6 +26,6 @@ client_t *create_client(struct sockaddr_in *client_addr, socklen_t
  * @param clients
  * @param read_fds
  */
-void process_client_activities(list_t *clients, fd_set *read_fds);
+void process_client_activities(server_t *server, fd_set *read_fds);
 
 #endif /* !CLIENT_H_ */

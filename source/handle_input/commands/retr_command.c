@@ -7,8 +7,9 @@
 
 #include "commands.h"
 
-void retr_cmd(char *input, int client_fd)
+void retr_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
-    write(client_fd, "RETR command\n", strlen("RETR command\n"));
+    (void)server;
+    write(client->client_socket.fd, "RETR command\n", strlen("RETR command\n"));
 }

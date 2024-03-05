@@ -7,8 +7,9 @@
 
 #include "commands.h"
 
-void port_cmd(char *input, int client_fd)
+void port_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
-    write(client_fd, "200 PORT command successful.\n", 28);
+    (void)server;
+    write(client->client_socket.fd, "200 PORT command successful.\n", 28);
 }

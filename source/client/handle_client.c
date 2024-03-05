@@ -17,6 +17,7 @@ client_t *create_client(struct sockaddr_in *client_addr,
     client->client_socket.fd = new_socket;
     client->username = NULL;
     client->password = NULL;
+    client->is_logged_in = false;
     return (client);
 }
 
@@ -32,27 +33,28 @@ static void free_fd_slot(list_t *clients, int fd)
     }
 }
 
-static void handle_client_activity(int fd, list_t *clients)
+static void handle_client_activity(int fd, server_t *server, client_t *client)
 {
     char buffer[1024];
     int valread = read(fd, buffer, 1024);
 
     if (valread == 0) {
         close(fd);
-        free_fd_slot(clients, fd);
+        free_fd_slot(server->clients, fd);
     } else {
         buffer[valread] = '\0';
-        parse_input(buffer, fd);
+        parse_input(buffer, server, client);
     }
 }
 
-void process_client_activities(list_t *clients, fd_set *read_fds)
+void process_client_activities(server_t *server, fd_set *read_fds)
 {
-    for (list_t *tmp = clients; tmp; tmp = tmp->next) {
+    for (list_t *tmp = server->clients; tmp; tmp = tmp->next) {
         if (tmp->client == NULL)
             continue;
         if (FD_ISSET(tmp->client->client_socket.fd, read_fds)) {
-            handle_client_activity(tmp->client->client_socket.fd, clients);
+            handle_client_activity(tmp->client->client_socket.fd, server,
+                tmp->client);
         }
     }
 }

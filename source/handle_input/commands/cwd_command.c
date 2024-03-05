@@ -7,8 +7,9 @@
 
 #include "commands.h"
 
-void cwd_cmd(char *input, int client_fd)
+void cwd_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
-    write(client_fd, "CWD command\n", strlen("CWD command\n"));
+    (void)server;
+    write(client->client_socket.fd, "CWD command\n", strlen("CWD command\n"));
 }

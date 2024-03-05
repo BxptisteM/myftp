@@ -7,8 +7,9 @@
 
 #include "commands.h"
 
-void stor_cmd(char *input, int client_fd)
+void stor_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
-    write(client_fd, "STOR command\n", strlen("STOR command\n"));
+    (void)server;
+    write(client->client_socket.fd, "STOR command\n", strlen("STOR command\n"));
 }

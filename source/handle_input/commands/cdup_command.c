@@ -7,8 +7,9 @@
 
 #include "commands.h"
 
-void cdup_cmd(char *input, int client_fd)
+void cdup_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
-    write(client_fd, "CDUP command\n", strlen("CDUP command\n"));
+    (void)server;
+    write(client->client_socket.fd, "CDUP command\n", strlen("CDUP command\n"));
 }

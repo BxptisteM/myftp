@@ -7,8 +7,9 @@
 
 #include "commands.h"
 
-void pasv_cmd(char *input, int client_fd)
+void pasv_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
-    write(client_fd, "PASV command\n", strlen("PASV command\n"));
+    (void)server;
+    write(client->client_socket.fd, "PASV command\n", strlen("PASV command\n"));
 }

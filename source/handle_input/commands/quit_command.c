@@ -7,9 +7,10 @@
 
 #include "commands.h"
 
-void quit_cmd(char *input, int client_fd)
+void quit_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
-    write(client_fd, "Disconnected from host\n221\n", 31);
-    close(client_fd);
+    write(client->client_socket.fd, "221\nDisconnected from host\n", 28);
+    close(client->client_socket.fd);
+    close(server->server_socket->fd);
 }

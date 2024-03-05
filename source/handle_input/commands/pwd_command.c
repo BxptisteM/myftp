@@ -7,8 +7,9 @@
 
 #include "commands.h"
 
-void pwd_cmd(char *input, int client_fd)
+void pwd_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
-    write(client_fd, "PWD command\n", strlen("PWD command\n"));
+    (void)server;
+    write(client->client_socket.fd, "PWD command\n", strlen("PWD command\n"));
 }

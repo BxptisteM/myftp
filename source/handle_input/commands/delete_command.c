@@ -7,8 +7,9 @@
 
 #include "commands.h"
 
-void dele_cmd(char *input, int client_fd)
+void dele_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
-    write(client_fd, "DELE command\n", strlen("DELE command\n"));
+    (void)server;
+    write(client->client_socket.fd, "DELE command\n", strlen("DELE command\n"));
 }

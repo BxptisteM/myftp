@@ -7,8 +7,9 @@
 
 #include "commands.h"
 
-void list_cmd(char *input, int client_fd)
+void list_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
-    write(client_fd, "LIST command\n", strlen("LIST command\n"));
+    (void)server;
+    write(client->client_socket.fd, "LIST command\n", strlen("LIST command\n"));
 }

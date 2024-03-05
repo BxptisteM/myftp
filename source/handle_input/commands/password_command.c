@@ -7,8 +7,9 @@
 
 #include "commands.h"
 
-void pass_cmd(char *input, int client_fd)
+void pass_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
-    write(client_fd, "PASS command\n", strlen("PASS command\n"));
+    (void)server;
+    write(client->client_socket.fd, "PASS command\n", strlen("PASS command\n"));
 }

@@ -8,7 +8,7 @@
 #include "commands.h"
 #include <stdlib.h>
 
-void parse_input(char *input, int client_fd)
+void parse_input(char *input, server_t *server, client_t *client)
 {
     char *command = NULL;
     int i = 0;
@@ -25,7 +25,7 @@ void parse_input(char *input, int client_fd)
     command = strtok(input, " \r\n");
     for (i = 0; i < array_size; ++i) {
         if (strcmp(command, commands_array[i].command) == 0) {
-            commands_array[i].func(input, client_fd);
+            commands_array[i].func(input, server, client);
             break;
         }
     }

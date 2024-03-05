@@ -5,7 +5,6 @@
 ** myftp
 */
 
-#include "commands.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -17,11 +16,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/select.h>
+#include <stdbool.h>
 
 #ifndef MYFTP_H_
     #define MYFTP_H_
 
-    #define C220 "Connection Establishment...\n220\n"
+    #define C220 "220\nConnection Establishment...\n"
 
     /**
      * @brief Macro for the tcp protocol
@@ -44,6 +44,7 @@ typedef struct client_s {
     socket_t client_socket;
     char *username;
     char *password;
+    bool is_logged_in;
 } client_t;
 
 
@@ -83,6 +84,13 @@ server_t init_server(int port);
  * @return int (exit(84))
  */
 void run_ftp(server_t *server);
+
+/**
+ * @brief parse the input from the client
+ * @param input
+ * @param client_fd
+ */
+void parse_input(char *input, server_t *server, client_t *client);
 
 
 #endif /* !MYFTP_H_ */

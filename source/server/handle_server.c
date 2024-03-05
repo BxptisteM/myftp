@@ -66,7 +66,7 @@ void run_ftp(server_t *server)
         if (FD_ISSET(server->server_socket->fd, &server->readfds)) {
             handle_new_connection(server->server_socket->fd, server->clients);
         }
-        process_client_activities(server->clients, &server->readfds);
+        process_client_activities(server, &server->readfds);
     }
     close(server->server_socket->fd);
 }

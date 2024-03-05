@@ -7,8 +7,9 @@
 
 #include "commands.h"
 
-void noop_cmd(char *input, int client_fd)
+void noop_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
-    write(client_fd, "Command okay.\n200\n", 22);
+    (void)server;
+    write(client->client_socket.fd, "200\nCommand okay.\n", 19);
 }
