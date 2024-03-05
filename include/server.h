@@ -51,6 +51,7 @@ typedef struct client_s {
 typedef struct server_s {
     int port;
     int max_fd;
+    char *path;
     fd_set readfds;
     list_t *clients;
     socket_t *server_socket;
@@ -76,7 +77,7 @@ void display_help(int ac, char **av);
  * @brief initialize the server structure
  * @return server_t
  */
-server_t init_server(int port);
+server_t init_server(int port, char *path);
 
 /**
  * @brief run the ftp server

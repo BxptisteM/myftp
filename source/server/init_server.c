@@ -34,10 +34,11 @@ static void initialize_socket(int sockfd, struct sockaddr_in *addr,
     }
 }
 
-server_t init_server(int port)
+server_t init_server(int port, char *path)
 {
     server_t server;
 
+    server.path = strdup(path);
     server.server_socket = malloc(sizeof(socket_t));
     server.clients = init_clients();
     server.port = port;

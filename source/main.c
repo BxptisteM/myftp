@@ -13,7 +13,7 @@ int main(int ac, char **av)
     server_t server;
 
     check_args(ac, av);
-    server = init_server(atoi(av[1]));
+    server = init_server(atoi(av[1]), av[2]);
     run_ftp(&server);
     return (0);
 }
