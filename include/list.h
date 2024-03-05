@@ -68,7 +68,7 @@ list_t *list_pop(list_t *list, int pos);
  * @param list
  * @return int
  */
-list_t *get_elem(list_t *list, int pos);
+list_t *list_get_node(list_t *list, int pos);
 
 /**
  * @brief free a list
