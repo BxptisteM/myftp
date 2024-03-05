@@ -10,5 +10,5 @@
 void noop_cmd(char *input, int client_fd)
 {
     (void)input;
-    write(client_fd, "Command okay.\n<- 200\n", 22);
+    write(client_fd, "Command okay.\n200\n", 22);
 }

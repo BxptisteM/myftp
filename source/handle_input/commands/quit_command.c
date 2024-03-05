@@ -10,6 +10,6 @@
 void quit_cmd(char *input, int client_fd)
 {
     (void)input;
-    write(client_fd, "Disconnected from host\n<- 221\n", 31);
+    write(client_fd, "Disconnected from host\n221\n", 31);
     close(client_fd);
 }
