@@ -11,5 +11,5 @@ void user_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
     (void)server;
-    write(client->client_socket.fd, "USER command\n", strlen("USER command\n"));
+    write(client->client_socket.fd, "USER command\n", 14);
 }

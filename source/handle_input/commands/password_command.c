@@ -11,5 +11,5 @@ void pass_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
     (void)server;
-    write(client->client_socket.fd, "PASS command\n", strlen("PASS command\n"));
+    write(client->client_socket.fd, "PASS command\n", 14);
 }

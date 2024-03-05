@@ -11,5 +11,5 @@ void stor_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
     (void)server;
-    write(client->client_socket.fd, "STOR command\n", strlen("STOR command\n"));
+    write(client->client_socket.fd, "STOR command\n", 14);
 }

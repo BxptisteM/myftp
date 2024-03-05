@@ -11,5 +11,5 @@ void list_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
     (void)server;
-    write(client->client_socket.fd, "LIST command\n", strlen("LIST command\n"));
+    write(client->client_socket.fd, "LIST command\n", 14);
 }

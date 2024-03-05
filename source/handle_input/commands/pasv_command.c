@@ -11,5 +11,5 @@ void pasv_cmd(char *input, server_t *server, client_t *client)
 {
     (void)input;
     (void)server;
-    write(client->client_socket.fd, "PASV command\n", strlen("PASV command\n"));
+    write(client->client_socket.fd, "PASV command\n", 14);
 }
