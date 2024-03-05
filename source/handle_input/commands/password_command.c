@@ -24,7 +24,7 @@ void pass_cmd(char *input, server_t *server UNUSED, client_t *client)
     char *extra = NULL;
 
     if (client->need_password == false) {
-        write(client->client_socket.fd, "530\n", 5);
+        write(client->client_socket.fd, "332\n", 5);
         return;
     }
     if (anonymous_logging(client, input) == true)
