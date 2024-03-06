@@ -12,9 +12,11 @@ client_t *create_client(struct sockaddr_in *client_addr,
 {
     client_t *client = malloc(sizeof(client_t));
 
+    client->valread = 0;
     client->client_socket.addr = *client_addr;
     client->client_socket.size = *client_addr_len;
     client->client_socket.fd = new_socket;
+    client->read_buffer = malloc(1024);
     client->username = NULL;
     client->password = NULL;
     client->is_logged_in = false;
@@ -24,16 +26,28 @@ client_t *create_client(struct sockaddr_in *client_addr,
     return (client);
 }
 
+static void check_read_completed(server_t *server, client_t *client)
+{
+    if (client->read_buffer[strlen(client->read_buffer) - 1] == '\n' &&
+        client->read_buffer[strlen(client->read_buffer) - 2] == '\r') {
+        client->read_buffer[strlen(client->read_buffer) - 2] = '\0';
+        parse_input(client->read_buffer, server, client);
+        memset(client->read_buffer, 0, 1024);
+        client->valread = 0;
+    }
+}
+
 static void handle_client_activity(int fd, server_t *server, client_t *client)
 {
-    char buffer[1024];
-    int valread = read(fd, buffer, 1024);
+    char buffer[1024] = {0};
 
-    if (valread == 0 || valread == -1 || (valread == 2 && buffer[0] == '\r')) {
+    client->valread = read(fd, buffer, 1024);
+    if (client->valread == 0 || client->valread == -1) {
         return;
     } else {
-        buffer[valread] = '\0';
-        parse_input(buffer, server, client);
+        buffer[client->valread] = '\0';
+        client->read_buffer = strcat(client->read_buffer, buffer);
+        check_read_completed(server, client);
     }
 }
 

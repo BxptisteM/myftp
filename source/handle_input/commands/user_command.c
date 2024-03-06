@@ -36,10 +36,10 @@ void user_cmd(char *input, server_t *server, client_t *client)
         write(client->client_socket.fd, "530\r\n", 5);
         return;
     }
-    if (strcmp(username, "Anonymous\r") == 0) {
+    if (strcmp(username, "Anonymous") == 0) {
         client->username = strdup(username);
         client->need_password = true;
-        write(client->client_socket.fd, "331\r\n", 6);
+        write(client->client_socket.fd, "331\r\n", 5);
         return;
     }
     check_taken_usernames(server, client, username);

@@ -42,7 +42,9 @@ typedef struct socket_s {
 } socket_t;
 
 typedef struct client_s {
+    int valread;
     socket_t client_socket;
+    char *read_buffer;
     char *username;
     char *password;
     char *current_path;
