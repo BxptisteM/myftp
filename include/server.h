@@ -45,6 +45,7 @@ typedef struct client_s {
     socket_t client_socket;
     char *username;
     char *password;
+    char *current_path;
     bool is_logged_in;
     bool need_password;
     bool quit_server;

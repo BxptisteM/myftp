@@ -31,7 +31,8 @@ static void setup_file_descriptors(int sockfd, fd_set *read_fds, int *max_fd,
     }
 }
 
-static void handle_new_connection(int sockfd, list_t *clients)
+static void handle_new_connection(int sockfd, list_t *clients,
+    server_t *server)
 {
     client_t *client;
     struct sockaddr_in client_addr;
@@ -43,10 +44,9 @@ static void handle_new_connection(int sockfd, list_t *clients)
         perror(strerror(errno));
         return;
     }
-    printf("New connection: ip is: %s, port: %d\n",
-        inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
     write(new_socket, C220, strlen(C220));
-    client = create_client(&client_addr, &client_addr_len, new_socket);
+    client = create_client(&client_addr, &client_addr_len,
+        new_socket, server);
     clients = list_add(clients, client);
 }
 
@@ -65,7 +65,8 @@ void run_ftp(server_t *server)
             continue;
         }
         if (FD_ISSET(server->server_socket->fd, &server->readfds)) {
-            handle_new_connection(server->server_socket->fd, server->clients);
+            handle_new_connection(server->server_socket->fd, server->clients,
+                server);
         }
         process_client_activities(server, &server->readfds);
     }

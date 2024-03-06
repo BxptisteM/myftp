@@ -8,7 +8,7 @@
 #include "client.h"
 
 client_t *create_client(struct sockaddr_in *client_addr,
-    socklen_t *client_addr_len, int new_socket)
+    socklen_t *client_addr_len, int new_socket, server_t *server)
 {
     client_t *client = malloc(sizeof(client_t));
 
@@ -20,6 +20,7 @@ client_t *create_client(struct sockaddr_in *client_addr,
     client->is_logged_in = false;
     client->quit_server = false;
     client->need_password = false;
+    client->current_path = strdup(server->path);
     return (client);
 }
 
