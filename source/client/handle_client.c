@@ -92,3 +92,12 @@ void process_and_remove_disconnected_clients(list_t **clients)
         }
     }
 }
+
+bool client_not_logged_in(client_t *client)
+{
+    if (client->is_logged_in == false) {
+        write(client->client_socket.fd, "530\r\n", 6);
+        return true;
+    }
+    return false;
+}

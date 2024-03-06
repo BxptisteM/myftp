@@ -43,4 +43,12 @@ void remove_and_close_client_connection(list_t **clients, list_t *current,
  */
 void process_and_remove_disconnected_clients(list_t **clients);
 
+/**
+ * @brief check if the client is logged in or not
+ * @param client
+ * @return true
+ * @return false
+ */
+bool client_not_logged_in(client_t *client);
+
 #endif /* !CLIENT_H_ */

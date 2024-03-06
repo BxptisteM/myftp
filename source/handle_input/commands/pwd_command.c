@@ -6,13 +6,12 @@
 */
 
 #include "commands.h"
+#include "client.h"
 
 void pwd_cmd(char *input UNUSED, server_t *server UNUSED, client_t *client)
 {
-    if (client->is_logged_in == false) {
-        write(client->client_socket.fd, "530\r\n", 5);
+    if (client_not_logged_in(client) == true)
         return;
-    }
     write(client->client_socket.fd, "257\r\n", 6);
     write(client->client_socket.fd, client->current_path,
         strlen(client->current_path));
