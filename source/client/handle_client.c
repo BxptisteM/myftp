@@ -42,6 +42,7 @@ static void handle_client_activity(int fd, server_t *server, client_t *client)
     char buffer[1024] = {0};
 
     client->valread = read(fd, buffer, 1024);
+    memset(client->read_buffer, 0, 1024);
     if (client->valread == 0 || client->valread == -1) {
         return;
     } else {
