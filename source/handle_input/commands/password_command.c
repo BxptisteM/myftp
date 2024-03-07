@@ -33,7 +33,6 @@ void pass_cmd(char *input, server_t *server UNUSED, client_t *client)
     if (anonymous_logging(client, password) == true)
         return;
     if (password == NULL || extra != NULL) {
-        printf("Empty password\n");
         write(client->client_socket.fd, "530\r\n", 5);
         return;
     }
