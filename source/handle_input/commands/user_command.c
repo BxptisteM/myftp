@@ -21,10 +21,9 @@ static void check_taken_usernames(server_t *server, client_t *client,
             return;
         }
     }
-    write(client->client_socket.fd, "331\r\n", 6);
 }
 
-void user_cmd(char *input, server_t *server, client_t *client)
+void user_cmd(char *input, server_t *server UNUSED, client_t *client)
 {
     char *username = NULL;
     char *extra = NULL;
@@ -43,6 +42,7 @@ void user_cmd(char *input, server_t *server, client_t *client)
         return;
     }
     check_taken_usernames(server, client, username);
+    write(client->client_socket.fd, "331\r\n", 5);
     client->username = strdup(username);
     client->need_password = true;
 }

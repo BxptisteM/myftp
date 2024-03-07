@@ -28,8 +28,7 @@ client_t *create_client(struct sockaddr_in *client_addr,
 
 static void check_read_completed(server_t *server, client_t *client)
 {
-    if (client->read_buffer[strlen(client->read_buffer) - 1] == '\n' &&
-        client->read_buffer[strlen(client->read_buffer) - 2] == '\r') {
+    if (client->read_buffer[strlen(client->read_buffer) - 1] == '\n' && client->read_buffer[strlen(client->read_buffer) - 2] == '\r') {
         client->read_buffer[strlen(client->read_buffer) - 2] = '\0';
         parse_input(client->read_buffer, server, client);
         memset(client->read_buffer, 0, 1024);
@@ -42,7 +41,8 @@ static void handle_client_activity(int fd, server_t *server, client_t *client)
     char buffer[1024] = {0};
 
     client->valread = read(fd, buffer, 1024);
-    memset(client->read_buffer, 0, 1024);
+    if (strlen(client->read_buffer) == 0)
+        memset(client->read_buffer, 0, 1024);
     if (client->valread == 0 || client->valread == -1) {
         return;
     } else {
