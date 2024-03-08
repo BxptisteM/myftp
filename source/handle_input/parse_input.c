@@ -11,7 +11,7 @@
 static void invalid_command(int i, int array_size, client_t *client)
 {
     if (i == array_size)
-        write(client->client_socket.fd, "500\r\n", 6);
+        write(client->client_socket.fd, "500\r\n", 5);
 }
 
 static char *get_command(char *input)

@@ -44,6 +44,7 @@ typedef struct socket_s {
 typedef struct client_s {
     int valread;
     socket_t client_socket;
+    socket_t client_data;
     char *read_buffer;
     char *username;
     char *password;
@@ -51,6 +52,7 @@ typedef struct client_s {
     bool is_logged_in;
     bool need_password;
     bool quit_server;
+    bool is_passive;
 } client_t;
 
 

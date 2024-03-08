@@ -16,6 +16,9 @@ client_t *create_client(struct sockaddr_in *client_addr,
     client->client_socket.addr = *client_addr;
     client->client_socket.size = *client_addr_len;
     client->client_socket.fd = new_socket;
+    client->client_data.fd = -1;
+    client->client_data.size = 0;
+    client->client_data.addr = (struct sockaddr_in){0};
     client->read_buffer = malloc(1024);
     memset(client->read_buffer, 0, 1024);
     client->username = NULL;
@@ -99,7 +102,7 @@ void process_and_remove_disconnected_clients(list_t **clients)
 bool client_not_logged_in(client_t *client)
 {
     if (client->is_logged_in == false) {
-        write(client->client_socket.fd, "530\r\n", 6);
+        write(client->client_socket.fd, "530\r\n", 5);
         return true;
     }
     return false;
