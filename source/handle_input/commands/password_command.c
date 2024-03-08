@@ -38,7 +38,6 @@ void pass_cmd(char *input, server_t *server UNUSED, client_t *client)
     }
     client->password = strdup(password);
     client->is_logged_in = true;
-    printf("Van Goofy\n");
     printf("Client fd is: %d\n", client->client_socket.fd);
     write(client->client_socket.fd, "230\r\n", 6);
 }
