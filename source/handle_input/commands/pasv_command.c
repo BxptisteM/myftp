@@ -20,5 +20,4 @@ void pasv_cmd(char *input UNUSED, server_t *server UNUSED, client_t *client)
         write(client->client_socket.fd, "501\r\n", 5);
         return;
     }
-    
 }
