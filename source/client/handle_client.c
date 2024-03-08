@@ -49,8 +49,6 @@ static void handle_client_activity(int fd, server_t *server, client_t *client)
         return;
     } else {
         buffer[client->valread] = '\0';
-        printf("Client %d: %s\n", client->client_socket.fd, buffer);
-        printf("Received: %d bytes\n", client->valread);
         client->read_buffer = strcat(client->read_buffer, buffer);
         check_read_completed(server, client);
     }
