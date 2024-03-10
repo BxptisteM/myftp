@@ -8,19 +8,13 @@
 #include "list.h"
 #include "commands.h"
 
-static void check_taken_usernames(server_t *server, client_t *client,
-    char *username)
+static int check_username(client_t *client, char *username)
 {
-    for (list_t *tmp = server->clients; tmp; tmp = tmp->next) {
-        if (tmp->client == NULL)
-            continue;
-        if (tmp->client->username == NULL)
-            continue;
-        if (strcmp(tmp->client->username, username) == 0) {
-            write(client->client_socket.fd, "530\r\n", 5);
-            return;
-        }
+    if (strcmp(username, "Anonymous") != 0) {
+        write(client->client_socket.fd, "530\r\n", 5);
+        return 1;
     }
+    return 0;
 }
 
 void user_cmd(char *input, server_t *server UNUSED, client_t *client)
@@ -41,7 +35,8 @@ void user_cmd(char *input, server_t *server UNUSED, client_t *client)
         write(client->client_socket.fd, "331\r\n", 5);
         return;
     }
-    check_taken_usernames(server, client, username);
+    if (check_username(client, username) == 1)
+        return;
     write(client->client_socket.fd, "331\r\n", 5);
     client->username = strdup(username);
     client->need_password = true;
