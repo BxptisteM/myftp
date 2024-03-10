@@ -17,6 +17,17 @@ static int check_username(client_t *client, char *username)
     return 0;
 }
 
+static int check_anonymous_login(client_t *client, char *username)
+{
+    if (strcmp(username, "Anonymous") == 0) {
+        client->username = strdup(username);
+        client->need_password = true;
+        write(client->client_socket.fd, "331\r\n", 5);
+        return 1;
+    }
+    return 0;
+}
+
 void user_cmd(char *input, server_t *server UNUSED, client_t *client)
 {
     char *username = NULL;
@@ -29,12 +40,8 @@ void user_cmd(char *input, server_t *server UNUSED, client_t *client)
         write(client->client_socket.fd, "530\r\n", 5);
         return;
     }
-    if (strcmp(username, "Anonymous") == 0) {
-        client->username = strdup(username);
-        client->need_password = true;
-        write(client->client_socket.fd, "331\r\n", 5);
+    if (check_anonymous_login(client, username) == 1)
         return;
-    }
     if (check_username(client, username) == 1)
         return;
     write(client->client_socket.fd, "331\r\n", 5);
