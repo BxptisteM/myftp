@@ -13,7 +13,7 @@
 static int invalid_dest(char *dest, char *extra, client_t *client)
 {
     if (dest == NULL || extra != NULL) {
-        write(client->client_socket.fd, "550\r\n", 6);
+        write(client->client_socket.fd, "550\r\n", 5);
         return 1;
     }
     return 0;
@@ -24,7 +24,7 @@ static int check_beyond_root(char *absolute_path, char *dest,
 {
     if (strncmp(absolute_path, server->path, strlen(server->path)) != 0 ||
         strcmp(dest, "/") == 0) {
-        write(client->client_socket.fd, "550\r\n", 6);
+        write(client->client_socket.fd, "550\r\n", 5);
         free(absolute_path);
         return 1;
     }
@@ -44,17 +44,17 @@ static void change_directory(char *absolute_path, client_t *client)
     int directory;
 
     if (validate_destination(absolute_path) != 0) {
-        write(client->client_socket.fd, "550\r\n", 6);
+        write(client->client_socket.fd, "550\r\n", 5);
         return;
     }
     directory = chdir(absolute_path);
     if (directory != 0) {
-        write(client->client_socket.fd, "550\r\n", 6);
+        write(client->client_socket.fd, "550\r\n", 5);
         return;
     }
     free(client->current_path);
     client->current_path = strdup(absolute_path);
-    write(client->client_socket.fd, "250\r\n", 6);
+    write(client->client_socket.fd, "250\r\n", 5);
     return;
 }
 
@@ -83,7 +83,7 @@ void cwd_cmd(char *input, server_t *server, client_t *client)
         return;
     absolute_path = get_absolute_path(dest, client);
     if (absolute_path == NULL) {
-        write(client->client_socket.fd, "550\r\n", 6);
+        write(client->client_socket.fd, "550\r\n", 5);
         return;
     }
     if (check_beyond_root(absolute_path, dest, server, client) == 1)
