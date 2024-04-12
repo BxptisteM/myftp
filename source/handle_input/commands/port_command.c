@@ -12,5 +12,5 @@ void port_cmd(char *input UNUSED, server_t *server UNUSED, client_t *client)
 {
     if (client_not_logged_in(client) == true)
         return;
-    write(client->client_socket.fd, "200 PORT command successful.\n", 28);
+    write(client->client_socket.fd, "200\r\n", 5);
 }
