@@ -11,7 +11,7 @@
 static int check_username(client_t *client, char *username)
 {
     if (strcmp(username, "Anonymous") != 0) {
-        write(client->client_socket.fd, "530\r\n", 5);
+        write(client->client_socket.fd, "331\r\n", 5);
         return 1;
     }
     return 0;
